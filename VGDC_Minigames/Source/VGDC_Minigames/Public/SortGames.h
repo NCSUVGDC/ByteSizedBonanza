@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "UserWidget.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "SortGames.generated.h"
@@ -25,8 +26,9 @@ public:
 	void exitOnError(char const *message);
 
 	UFUNCTION(BlueprintCallable, Category = "Sorting")
-	TArray<FString> sortList(TArray<FString> list);
+	TArray<UUserWidget*> sortList(TArray<UUserWidget*> list, FName sortType);
 
 	UFUNCTION(BlueprintCallable, Category = "Sorting")
-	void printList(TArray<FString> list);
+	void printList(TArray<UUserWidget*> list);
+
 };

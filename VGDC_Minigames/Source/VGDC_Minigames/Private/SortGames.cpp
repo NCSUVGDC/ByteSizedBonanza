@@ -44,8 +44,9 @@ void ASortGames::exitOnError(char const *message)
 }
 
 // Sort the given list using merge sort.
-TArray<FString> ASortGames::sortList(TArray<FString> list)
+TArray<UUserWidget*> ASortGames::sortList(TArray<UUserWidget*> list, FName sortType)
 {
+	//UE_LOG(LogTemp, Error, TEXT("FName of RootWidget is %s"), *(list[0]->GetWidgetFromName(sortType)->GetLabelMetadata()));
 	// A trivial list is already sorted.
 	if (list.Num() < 2) {
 		return list;
@@ -60,8 +61,8 @@ TArray<FString> ASortGames::sortList(TArray<FString> list)
 	int blen = (list.Num() + 1) / 2;
 
 	// Storage for the two half lists.
-	TArray<FString> a;
-	TArray<FString> b;
+	TArray<UUserWidget*> a;
+	TArray<UUserWidget*> b;
 
 	// Copy the first half (alen elements) of list[] to a[]
 	int start = 0;
@@ -79,8 +80,8 @@ TArray<FString> ASortGames::sortList(TArray<FString> list)
 
 
 	// Recursively sort the two smaller lists.
-	a = sortList(a);
-	b = sortList(b);
+	a = sortList(a, sortType);
+	b = sortList(b, sortType);
 
 	// Merge the two smaller lists into one sorted lists.
 
@@ -92,8 +93,9 @@ TArray<FString> ASortGames::sortList(TArray<FString> list)
 	// is smaller, copying it to the next position in list[]
 	while (leftIndex + rightIndex < list.Num()) {
 		if (rightIndex == blen
-			|| (leftIndex < alen && (a[leftIndex].Compare(b[rightIndex]) < 0))) {
+			|| (leftIndex < alen && (a[leftIndex]->GetWidgetFromName(sortType)->GetLabelMetadata().Compare(b[rightIndex]->GetWidgetFromName(sortType)->GetLabelMetadata()) < 0))) {
 			//UE_LOG(LogTemp, Error, TEXT("FIRST MERGE, changing %s to %s"), list[leftIndex + rightIndex], a[leftIndex]);
+			//UPanelWidget *gameIcon = list[leftIndex + rightIndex]->GetParent();
 			list[leftIndex + rightIndex] = a[leftIndex];
 			leftIndex = leftIndex + 1;
 		}
@@ -107,11 +109,11 @@ TArray<FString> ASortGames::sortList(TArray<FString> list)
 }
 
 // Print out a (hopefully sorted) list.
-void ASortGames::printList(TArray<FString> list)
+void ASortGames::printList(TArray<UUserWidget*> list)
 {
 	for (int i = 0; i < list.Num(); i++) {
 		//printf("%d", list[i]);
-		UE_LOG(LogTemp, Log, TEXT("%s"), *list[i]);
+		UE_LOG(LogTemp, Log, TEXT("%s"), *(list[i]->GetWidgetFromName("GameTitle")->GetLabelMetadata()));
 		// fencepost behavior.
 		//if (i + 1 < list.Num())
 			//UE_LOG(LogTemp, Log, TEXT(" "));
