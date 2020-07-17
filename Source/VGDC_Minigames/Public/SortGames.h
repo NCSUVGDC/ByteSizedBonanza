@@ -3,6 +3,7 @@
 #pragma once
 
 #include "UserWidget.h"
+#include "Components/Widget.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "SortGames.generated.h"

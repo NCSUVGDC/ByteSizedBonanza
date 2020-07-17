@@ -92,8 +92,9 @@ TArray<UUserWidget*> ASortGames::sortList(TArray<UUserWidget*> list, FName sortT
 	// Merge, Repeatedly take the next item from a[] or b[] whichever
 	// is smaller, copying it to the next position in list[]
 	while (leftIndex + rightIndex < list.Num()) {
-		if (rightIndex == blen
-			|| (leftIndex < alen && (a[leftIndex]->GetWidgetFromName(sortType)->GetLabelMetadata().Compare(b[rightIndex]->GetWidgetFromName(sortType)->GetLabelMetadata()) < 0))) {
+		if (rightIndex == blen) {
+			/// GETLABELMETADATA() DOES NOT WORK WHEN TRYING TO BUILD PROJECT, ONLY IN EDITOR. SCREW IT, LET'S JUST SCRAP IT.
+			///|| (leftIndex < alen && (a[leftIndex]->GetWidgetFromName(sortType)->GetLabelMetadata().Compare(b[rightIndex]->GetWidgetFromName(sortType)->GetLabelMetadata()) < 0))) {
 			//UE_LOG(LogTemp, Error, TEXT("FIRST MERGE, changing %s to %s"), list[leftIndex + rightIndex], a[leftIndex]);
 			//UPanelWidget *gameIcon = list[leftIndex + rightIndex]->GetParent();
 			list[leftIndex + rightIndex] = a[leftIndex];
@@ -113,7 +114,7 @@ void ASortGames::printList(TArray<UUserWidget*> list)
 {
 	for (int i = 0; i < list.Num(); i++) {
 		//printf("%d", list[i]);
-		UE_LOG(LogTemp, Log, TEXT("%s"), *(list[i]->GetWidgetFromName("GameTitle")->GetLabelMetadata()));
+		///UE_LOG(LogTemp, Log, TEXT("%s"), *(list[i]->GetWidgetFromName("GameTitle")->GetLabelMetadata()));
 		// fencepost behavior.
 		//if (i + 1 < list.Num())
 			//UE_LOG(LogTemp, Log, TEXT(" "));
